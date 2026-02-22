@@ -1,0 +1,70 @@
+Event loop:
+** JS Execution Model:
+	i) JS is single threaded, executes one task at a time.	    	ii) Uses Event Loop to handle async operations.
+**
+Core Components:
+1) Call stack:
+	i) Executes synchronous code
+	ii) LIFO, if stack if bust nothing runs, only stack runs
+2) Web APIs:
+	Async operations handle outside stack
+	Browser:
+		setTimeout, setInteval, fetch, DOM events
+	Node:
+		fs, db calls, timers
+3) Task queues:
+	Macrotask Queue: It contains
+		setTimeout, setInteval
+	Microtask Queue: It contains
+		Promise.then, .catch, .finally etc
+4) Event Loop Algorithm:
+	Event loop continuously checks:
+	while(true):
+		if call stack in empty:
+			exec all microtasks
+			exec one microtask
+	Note: Microtask always runs before macrotasks
+	      Microtask queue is fully drained each cycle
+5) Execution order priority:
+	i) Synchronous code
+	ii) Microtasks
+		
+
+Ex:
+console.log("A");
+setTimeOut(()=>console.log("B"),0);
+Promise.resolve().then(()=>console.log("C"));
+console.log("D")
+
+output:
+A
+D
+C
+B
+
+6) Nested Microtasks Rule:
+If a microtask creates another microtask:
+	The new one executes in the same cycle
+	Before any macrotask
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
