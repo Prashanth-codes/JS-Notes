@@ -46,25 +46,3 @@ B
 If a microtask creates another microtask:
 	The new one executes in the same cycle
 	Before any macrotask
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
