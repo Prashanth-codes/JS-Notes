@@ -1,0 +1,92 @@
+1) Callback Functions:
+A function that is passes as an argument to another function and 
+is executed later.
+
+function greet(name){
+	c.log("Hello "+name);
+}
+
+function process(callback){
+	const name = 'Prashanth';
+	callback(name);
+}
+
+process(greet);
+
+2) Two types of callbacks:
+	i) Synchronous:
+		Basic Function passing
+		ex: Above greet example
+	ii) Asynchronous:
+	a) Example with timeline
+		console.log("Start");
+		function slowTask(callback) {
+  			setTimeout(function() {
+    				console.log("Task Finished");
+    				callback();
+  			}, 2000);
+		}
+		slowTask(function() {
+  			console.log("Callback Executed");
+		});
+		console.log("End");
+
+		Output:
+		Start
+		End
+		Task Finished
+		Callback Executed
+
+	b) Simulating server request.
+		function fetchUser(callback) {
+  			console.log("Fetching user from server...");
+  			setTimeout(function() {
+    				const user = { name: "Prashanth", age: 22 };
+    				callback(user);
+  			}, 3000);
+		}
+		fetchUser(function(userData) {
+  			console.log("User received:", userData);
+		});
+		
+		Output:
+		Fetching user from server..
+		User received: { name: "Prashanth", age: 22 }
+
+Callback Hell:
+Callback Hell happens when multiple asynchronous operations depend 
+on each other and are written using nested callbacks, leading to 
+deeply indented and hard to read code.
+
+loginUser(username, password, function(user) {
+	getUserProfile(user.id, function(profile) {
+		getPosts(profile.id, function(posts) {
+			getComments(posts[0].id, function(comments){
+				console.log(comments);
+			});
+		});
+	});
+});
+
+Handled by:
+1) Promises:
+Promises flatten the structure.
+	loginUser(username, password)
+  	.then(user => getUserProfile(user.id))
+  	.then(profile => getPosts(profile.id))
+  	.then(posts => getComments(posts[0].id))
+  	.then(comments => console.log(comments))
+  	.catch(err => console.error(err));
+2) Async-await:
+	async function showComments() {
+  		try {
+    			const user = await loginUser(username, password);
+    			const profile = await getUserProfile(user.id);
+    			const posts = await getPosts(profile.id);
+    			const comments = await getComments(posts[0].id);
+
+    			console.log(comments);
+  		} catch (err) {
+    			console.error(err);
+  		}
+	}
