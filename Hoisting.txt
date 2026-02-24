@@ -1,0 +1,101 @@
+Hoisting:
+Hoisting means during the creation phase of execution, Js moves
+declarations to the top of their scope before code execution.
+👉 only declarations are hoisted and initializations.
+
+JS execution phases: 👉 Understanding this makes hoisting easy.
+	1) Creation phase:
+		i) Memory is allocated
+		ii) vars and funcs are registered
+		iii) Hoisting happens here
+	2) Execution phase:
+		i) code runs line by line
+		ii) Assignments happen
+		iii) Function execute.
+
+Examples
+1) Hoisting with var:✅
+	console.log(a);
+	var a = 10;
+	Output: undefined
+	
+	Explanation:
+		Js interprets as 
+		var a;   //hoisted (memory allocated)
+		console.log(a);
+		a = 10
+		
+		So a exists, but not assigned yet, default value= undefined
+	
+2) Hoisting with let and const:❌
+	console.log(a);
+	let a = 10;
+	Output:
+	ReferenceError: Cannot access 'a' before initialization
+	
+	Explanation:
+	let and const are hoisted, but they placed in temporal dead
+	zone(TDZ), they cannot accessed before initialisation
+
+3) Hoisting with function declarations: ✅
+	greet()
+	function greet(){
+		console.log("helo");
+	}
+	Output: helo
+	
+	Explanation:
+	During creation phase, JS stores entire fucntion in memory
+	So function can be called before defintion
+
+4) Hoisting with function expressions:❌
+	greet();
+	var greet = function(){
+		console.log("hello");
+	}
+	
+	Output:
+	TypeError: greet is not a function
+	
+	Explanation:
+		creation phase:
+			var greet
+		exection phase:
+		greet(); // undefined() ❌error
+		
+		So variables are hoisted but function assignment is not
+		hoisted.
+
+Hoisting inside functions:✅
+	var x = 10;
+	function test(){
+		console.log(x);
+		var x = 20;
+	}
+	test()
+	Output: undefined
+	
+	Explanation:
+		Inside js, it sees;
+		function test(){
+			var x; //hoisted locally
+			console.log(x);
+			x=20;
+		}
+		Local x is undefined at log time
+	
+	** With let	
+	var x = 10;
+
+	function test() {
+		console.log(x);
+	 	let x = 20;
+	}
+	test();
+	
+	Output: Reference error
+	
+	Explanation:
+	Let x is hoisted but in tdz, cannot access before initialisation
+
+
