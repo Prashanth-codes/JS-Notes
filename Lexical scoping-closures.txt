@@ -1,0 +1,73 @@
+Lexical scoping:
+	The scope of variable is determined by where it is written in
+	source code, not where it is called from.
+	
+	Ex:
+	let name = "Global";
+	function print() {
+	  console.log(name);
+	}
+	function test() {
+	  let name = "Local";
+	  print();
+	}
+	test();
+	
+	Output:
+	Global
+	
+Dynamic scoping:
+	The scope of variable is determined by where it is called from,
+	not by where it is written.
+	👉Js doesnt use dynamic scoping.
+	Ex:
+	let name = "Global";
+	function print() {
+	  console.log(name);
+	}
+	function test() {
+	  let name = "Local";
+	  print();
+	}
+	test();
+	
+	Output:
+	Local
+
+Closures:	
+	A closure is when a function that remembers variables from its
+	outer scope even after the outer function has finished execution
+	Because of Lexical Scoping:	
+		Functions are linked to their outer environment.
+	Because of That Link:
+		When we return a function, JavaScript preserves that 
+		environment.
+	That preserved environment = Closure
+	
+	Ex 1:
+	function outer(){
+		let name = "Prashanth",
+		function inner(){
+			console.log(name);
+		}
+		return inner;
+	}
+	Output:
+	Prashanth
+
+	Ex:2 
+	function counter(){
+		let c=0;
+		return function(){
+			c+=1;
+			console.log(c);
+		}
+	}
+	const cnt = counter()
+	cnt()
+	cnt()
+	cnt()
+	Output:
+	1
+	2
+	3
