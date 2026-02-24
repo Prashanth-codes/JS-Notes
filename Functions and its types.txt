@@ -120,3 +120,25 @@ These functions are executed immediately after their definition.
 	}
 	greet.then((res) => console.log(res));
 	
+*** Function overriding ***
+Javascript does not support real overloading like in JAVA
+ex:
+function greet(name){
+	console.log("Hello "+name);
+}
+function greet(name, age){
+	console.log("Hello "+name+", age:"+age);
+}
+
+greet("John",20);
+greet("John");
+
+Output:
+Hello John, age: 20
+Hello John, age: undefined
+
+👉Second function overwrites first one, js replaces the previous
+function defintion.
+👉The above function will be overwritten by the function below,
+and the below function only will be executed for any number and
+any type of arguments.
