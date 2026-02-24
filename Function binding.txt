@@ -1,0 +1,94 @@
+Function binding:
+
+Why:
+In JS, "this" depends on how a function is called, nit where it
+is written.
+ex:✅
+	const user = {
+		name: "Prashanth",
+		greet() {
+			console.log(this.name)
+		}
+	}
+	user.greet()
+	Output: Prashanth
+	Explanation:
+		Here, function was called using user.greet()
+		So this=user
+
+ex:❌
+	const fn = user.greet;
+	fn()
+	Output: undefined
+	Explanation:
+		Here this becomes window(browser), undefined(strict mode)
+		The connection to user is lost, this is called conn loss.
+
+So, now binding exists to fix this problem.
+1) Call:
+	It invokes a function immediatel and allows you to specify"
+	i) The value of this
+	ii) Arguments passed individually.
+	
+	const user = {
+		name: "Prashanth",
+		greet() {
+			console.log(this.name);
+		}
+	}
+	const fn =  user.greet;
+	fn.call(user);
+	
+	Output:
+		Prashanth
+	Explanation:
+		call(user) explicitly sets this=user
+		So even though fn is detached, we manually attach it again
+	
+2) Apply:
+	const user = {
+		name: "Prashanth",
+		greet() {
+			console.log(this.name);
+		}
+	}
+	const fn =  user.greet;
+	fn.apply(user);
+	
+Difference between call and apply:
+	const user = {
+		  name: "Prashanth",
+		  greet(city, country) {
+			console.log(this.name + " from " + city + ", " + country);
+		 }
+	};
+	const fn = user.greet;
+	
+	Using call:
+	fn.call(user, "Hyd", "India");
+	Using apply:
+	fn.apply(user, ["Hyd","India"])
+	
+3) bind:
+	const user = {
+		name: "Prashanth",
+		greet(){
+			console.log(this.name);
+		}
+	}
+	const fn = user.greet.bind(user);
+	fn()
+	
+	Output: Prashanth
+
+Difference between apply, call and bind
+	fn.call(user);     // runs now
+	fn.apply(user);    // runs now
+	const newFn = fn.bind(user);  // does NOT run
+	newFn();                      // runs later
+	
+	Feature					call()		apply()		bind()
+	Executes Immediately	✅			✅			❌
+	Returns New Function	❌			❌			✅
+	Permanent Binding		❌			❌			✅
+
