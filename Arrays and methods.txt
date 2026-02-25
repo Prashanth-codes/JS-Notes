@@ -1,0 +1,295 @@
+Arrays:
+It can store multiple values of multiple data types.
+Ex: let arr = [1,"hello"]
+
+**Creation:
+1) Using literal:
+	EX:
+	const arr = [1,"Hello"]
+2) Using constructor:
+	EX:
+	const arr = new Array(1,2,3);
+	👉IMP: const arr = new Array(5);
+	It will create an array with size 5
+
+**Accessing:
+	console.log(arr[0])
+
+**Adding elements:
+1) Push: It adds element at end
+	EX:
+	const arr = [1,2,3];
+	arr.push(4);
+	console.log(arr);
+	
+	output:
+	[1,2,3]
+2) Unshift: It adds element at beginning
+	EX:
+	const arr = [2,3]
+	arr.unshift(1);
+	console.log(arr);
+	
+	Output:
+	[1,2,3]
+
+**Removing elements:
+1) Pop: removes from end
+	EX:
+	const arr = [1,2,3];
+	console.log(arr.pop());
+	console.log(arr)
+
+	Output:
+	3
+	[1,2]
+	
+2) Shift: Removes from beginning:
+	EX:
+	const arr = [1,2,3];
+	console.log(arr.shift());
+	console.log(arr);
+	
+	Output
+	1
+	[2,3]
+
+** Iteration methods:	
+1) forEach():
+	Runs a function for each element
+	->It does not return new Array
+	EX:
+	const arr = [10,20,30];
+	arr.forEach((value,index) => {
+		console.log(index,value);
+	})
+	
+	Output:
+	0 10
+	1 20
+	2 30
+	
+2) map():
+	Returns a new array.
+	EX:
+	const arr = [1,2,3];
+	const sq = arr.map(num => num*num);
+	console.log(sq);
+	
+	output:
+	[1,4,9]
+
+3) filter():
+	Returns elements that match condition
+	EX:
+	const arr = [1,2,3,4];
+	const even = arr.filter(num => num%2===0);
+	console.log(even);
+	
+	Output:
+	[2,4]
+
+4) reduce():
+	Reduces array into a single value
+	Syntax:
+	array.reduce((accumulater, currentValue) => {//logic}, init value})
+	Parameters:
+	accumulator-> stores result
+	currentValue-> points to current value
+	InitialValue-> starting value of accumulator
+	EX:
+	const arr = [1,2,3,4];
+	const sum = arr.reduce((acc,curr) => acc+curr,0);
+	console.log(sum);
+	
+	Output:
+	10
+
+5) some():
+	Returns true if any element matches
+	EX:
+	const arr = [1,2,3];
+	console.log(arr.some(num => num>2);
+	
+	Output:
+	true
+	
+6) every():
+	Returns true if all match.
+	EX:
+	const arr = [2,4,6];
+	console.log(arr.every(num=>num%2===0);
+	
+	Output:
+	true
+	
+**Search methods
+1) indexOf():
+	It is used to find first occurence of a specific value in an
+	array.
+	Returns index if found else -1	
+	Syntax:
+	array.indexOf(element, startIndex);
+	Parameters:
+	i) element: target element
+	ii) startIndex: From which index we have to start search
+	
+	const arr = [10,20,30,20];
+	console.log(arr.indexOf(20));
+	console.log(arr.indexOf(20,2)); //using startIndex
+	
+	Output:
+	1
+	3
+	
+2) lastIndexOf():
+	finds the last occurence of a value.
+	Returns index if found else -1
+	Syntax:
+	array.lastIndexOf(element, fromIndex);
+	👉It searches from fromIndex to left.
+	
+	Ex:
+	const arr = [10,20,30,20];
+	console.log(arr.lastIndexOf(20));
+	console.log(arr.lastIndexof(20,2));
+	
+	Output:
+	3
+	1
+
+3) includes:
+	checks whether a value exists in the array.
+	return true or false
+	Syntax:
+	array.includes(element, fromIndex)
+	
+	EX:
+	const arr = [1,2,3,2];
+	console.log(arr.includes(2));
+	console.log(arr.includes(2,2));
+	
+	Output:
+	true
+	true
+	
+4) find():
+	It returns the first element that satisfies a condition.
+	Returns the element if satisfy condition else undefined
+	
+	const arr = [5,12,8,130];
+	const ans = arr.find(num=>num>10);
+	console.log(ans);
+	
+	Output:
+	12
+	👉No index parameter
+	
+5) findLast():
+	returns the last element that satisfy a condition.
+	
+	EX:
+	const arr = [5,12,8,130,44];
+	const index = arr.findLast(num=>num>10)
+	console.log(index);
+	
+	Output:
+	4	
+	👉No index parameter
+	
+6) findIndex():
+	returns the index of first element that satisfy a condition.
+	
+	Ex:
+	const arr = [5,12,8,130]
+	const index = arr.findIndex(num => num>10);
+	console.log(index);
+	
+	Output:
+	1
+	👉No index parameter
+
+7) findLastIndex():
+	returns the index of last element that satisfy a condition.
+	
+	EX:
+	const arr = [5,12,8,130,44];
+	const index = arr.findLasIndex(num=> num>10);
+	console.log(index);
+	
+	Output: 4
+	👉No index parameter
+	
+8) slice(start, end):
+	Do not modify original array.
+	
+	const arr = [1,2,3,4];
+	const new = arr.slice(1,3);
+	console.log(new);
+	
+	Output:
+	[2,3]
+
+9) splice(start, deleteCount, item1, item2,....):
+	start-> position where operation starts
+	deleteCount-> how many elements to remove from the start
+	items-> elements to insert.
+	
+	EX: const arr = [1,2,3,4];
+	arr.splice(1,2,10,20);
+	console.log(arr);
+	
+	Output:
+	 [1,4,10,20]
+
+** Sorting methods:
+1) sort():
+	const arr = [10,5,40];
+	❌arr.sort();
+	console.log(arr);
+	
+	Output:
+	[10,40,5]
+	👉Because js converts string by default.
+	
+	arr.sort((a,b)=>a-b);
+	console.log(arr);
+	
+	Output:
+	[5,10,40]
+
+2) Reverse():
+	const arr = [1,2,3];
+	arr.reverse();
+	console.log(arr);
+	
+	Output:
+	[3,2,1]
+
+**Combining arrays
+1) concat():
+	Combine two arrays
+	
+	EX:
+	const a1 = [1,2];
+	const a2 = [3,4];
+	const res = a1.concat(a2);✅
+	console.log(res);
+	
+	Output:
+	[1,2,3,4]
+
+	a1.concat(a2) ❌
+	console.log(a1);
+	Output:
+	[1,2]
+	
+2) Spread Operator:
+	const a1 = [1,2];
+	const a2 = [3,4];
+	const ans = [...arr1,...arr2]
+	console.log(ans);
+	
+	Output:
+	[1,2,3,4]
+
