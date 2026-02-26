@@ -1,0 +1,73 @@
+Access Modifiers
+It defines who can access properties and methods of a class.
+They control visibility and protection of data.
+
+Why:
+Imagine: account.balance = -100000
+Anyone could change your bank balance. That's dangerous
+So we have to restrict access to protect data(part of encapsulation)
+
+Types:
+1) Public - Accessible everywhere
+2) private - accesible only insidec class.
+3) protected - inside class + subclass
+
+👉 Traditonal JS did not have real access modifiers, everything
+was public by default.
+It uses closure tricks.
+	Ex:
+	function BankAccount(owner, balance) {
+		let balance = balance;
+		this.owner = owner;
+		this.deposit = function(amount) {
+			balance+=amount
+		}
+		this.getBalance = function(){
+			return balance;
+		}
+	}
+	const acc = new BankAccount("Prashanth",1000);
+	console.log(acc.balance);
+	
+	Output:
+	Error
+	Here balance is private and only accesible throufh methods,
+	but its not real private, just closre based protection
+	
+** ES6 class access modifiers
+Modern JS improved this.
+
+1) public 
+by default everything is public
+	class Person{
+		constructor(name){
+			this.name = name;
+		}
+	}
+	const p = new Person("prashanth");
+	console.log(p.name);
+	
+2) Private (Real private using #)
+	class BankAccount {
+		#balance;
+		constructor(balance) {
+			this.#balance = balance;
+		}
+		deposit(amount) {
+			this.#balance+=amount;
+		}
+		getBalance(){
+			this.#balance;
+		}
+	}
+	const acc = new BankAccount(1000);
+	console.log(acc.#balance);
+	
+	Output:
+	Error
+	
+	Now this is real private
+	
+3) Protected:
+JS still doesnt have true protected.
+It is simulated using naming conventions.
