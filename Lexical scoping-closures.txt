@@ -26,7 +26,7 @@ Dynamic scoping:
 	  console.log(name);
 	}
 	function test() {
-	  let name = "Local";
+	  name = "Local";
 	  print();
 	}
 	test();
