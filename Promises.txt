@@ -106,3 +106,62 @@ But, when You MUST Use Raw Promises:
 3) Process utilities:
 	Like promise.all, promises.race, promises.any, promises.settled etc
 
+*******Methods********
+1) Promise.all():
+	Runs multiple promises in parallel.
+	Resolves when all promises succeed,Rejects if any promise fails
+	EX 1:
+	let p1 = Promise.resolve("Task1 done");
+	let p2 = Promise.resolve("Task2 done");
+	let p3 = Promise.resolve("Task3 done");
+	Promise.all([p1, p2, p3])
+	.then(result => {
+	    console.log(result);
+	});
+	Output:
+	["Task1 done", "Task2 done", "Task3 done"]
+
+	EX: If one fails
+	let p1 = Promise.resolve("Task1");
+	let p2 = Promise.reject("Task2 failed");
+	Promise.all([p1,p2])
+	.catch(err => console.log(err));
+	Output:
+	Task2 failed
+
+2) promise.allSettled():
+	Waits for all promises to finish, regardless of success or failure.
+	Returns status of each promise.
+	EX: let p1 = Promise.resolve("Success");
+	let p2 = Promise.reject("Failed");
+	Promise.allSettled([p1,p2])
+	.then(result => console.log(result));
+	Output:
+	[
+		 { status: 'fulfilled', value: 'Success' },
+		 { status: 'rejected', reason: 'Failed' }
+	]
+
+3) Promise.race():
+	Returns the first promise that settles (success or failure).
+	Ex:
+	let p1 = new Promise(resolve => setTimeout(() => resolve("First"),1000));
+	let p2 = new Promise(resolve => setTimeout(() => resolve("Second"),2000));
+	Promise.race([p1,p2])
+	.then(result => console.log(result));
+	Output:
+	First
+
+4) Promise.any()
+Returns the first successful promise.
+If all promises fail -> it throws an error.
+EX:
+let p1 = Promise.reject("Error1");
+let p2 = Promise.resolve("Success");
+let p3 = Promise.resolve("Another success");
+Promise.any([p1,p2,p3])
+.then(result => console.log(result));
+
+Output:
+Success
+-> If all fails, AggregateError
