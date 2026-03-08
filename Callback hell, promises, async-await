@@ -1,0 +1,223 @@
+Callback Hell:
+
+function createOrder(cart, callback) {
+    console.log("Creating order...");
+
+    setTimeout(function () {
+        let orderId = "ORD123";
+
+        console.log("Order created:", orderId);
+
+        callback(orderId);
+    }, 1000);
+}
+
+function proceedToPayment(orderId, callback) {
+    console.log("Processing payment for:", orderId);
+
+    setTimeout(function () {
+        let paymentInfo = "Payment Successful";
+
+        console.log(paymentInfo);
+
+        callback(paymentInfo);
+    }, 1000);
+}
+
+function showOrderSummary(paymentInfo, callback) {
+    console.log("Preparing order summary...");
+
+    setTimeout(function () {
+        let summary = "Order summary displayed";
+
+        console.log(summary);
+
+        callback(summary);
+    }, 1000);
+}
+
+function updateWallet(summary, callback) {
+    console.log("Updating wallet...");
+
+    setTimeout(function () {
+        console.log("Wallet updated with cashback");
+        callback();
+    }, 1000);
+}
+
+let cart = ["Shoes", "T-Shirt", "Watch"];
+
+createOrder(cart, function(orderId) {
+
+    proceedToPayment(orderId, function(paymentInfo) {
+
+        showOrderSummary(paymentInfo, function(summary) {
+
+            updateWallet(summary, function() {
+
+                console.log("All steps completed");
+
+            });
+
+        });
+
+    });
+
+});
+
+
+With promises:
+
+function createOrder(cart) {
+    return new Promise(function(resolve, reject) {
+
+        console.log("Creating order...");
+
+        setTimeout(function() {
+
+            let orderId = "ORD123";
+
+            console.log("Order created:", orderId);
+
+            resolve(orderId);
+
+        }, 1000);
+
+    });
+}
+
+function proceedToPayment(orderId) {
+    return new Promise(function(resolve, reject) {
+
+        console.log("Processing payment for:", orderId);
+
+        setTimeout(function() {
+
+            let paymentInfo = "Payment Successful";
+
+            console.log(paymentInfo);
+
+            resolve(paymentInfo);
+
+        }, 1000);
+
+    });
+}
+
+function showOrderSummary(paymentInfo) {
+    return new Promise(function(resolve, reject) {
+
+        console.log("Preparing order summary...");
+
+        setTimeout(function() {
+
+            let summary = "Order summary displayed";
+
+            console.log(summary);
+
+            resolve(summary);
+
+        }, 1000);
+
+    });
+}
+
+function updateWallet(summary) {
+    return new Promise(function(resolve, reject) {
+
+        console.log("Updating wallet...");
+
+        setTimeout(function() {
+
+            console.log("Wallet updated with cashback");
+
+            resolve("All steps completed");
+
+        }, 1000);
+
+    });
+}
+
+let cart = ["Shoes", "T-Shirt", "Watch"];
+
+// createOrder(cart)
+// .then(function(orderId){
+//     return proceedToPayment(orderId);
+// })
+// .then(function(paymentInfo){
+//     return showOrderSummary(paymentInfo);
+// })
+// .then(function(summary){
+//     return updateWallet(summary);
+// })
+// .then(function(result){
+//     console.log(result);
+// })
+// .catch(function(error){
+//     console.log("Error:", error);
+// });
+
+createOrder(cart)
+.then(proceedToPayment)
+.then(showOrderSummary)
+.then(updateWallet)
+
+Explanation: .then() automatically passes the resolved value from the previous Promise to the next function.
+
+Async await:
+function createOrder(cart){
+    return new Promise(function(resolve,reject){
+        console.log("Creating order");
+        setTimeout(function(){
+            let id = 1;
+            console.log("Order id",id);
+            resolve(id);
+        },1000)
+    })
+}
+
+function proceedToPayment(orderId){
+    return new Promise(function(resolve,reject){
+        console.log("processing payment for: ",orderId);
+        setTimeout(function(){
+            let info = "payment successful";
+            console.log(info);
+            resolve(info);
+        },1000);
+    })
+}
+
+function showOrderSummary(paymentInfo) {
+    return new Promise(function(resolve,reject){
+        console.log("Preparing order summary...");
+        setTimeout(function () {
+            let summary = "Order summary displayed";
+            console.log(summary);
+            resolve(summary);
+        }, 1000);
+    })
+}
+
+function updateWallet(summary) {
+    return new Promise(function(resolve,reject){
+        console.log("Updating wallet...");
+        setTimeout(function () {
+            console.log("Wallet updated with cashback");
+            resolve("All steos dobe");
+        }, 1000);
+    })
+}
+
+let cart = ["Shoes", "T-Shirt", "Watch"];
+async function processOrder() {
+    try {
+        let orderId = await createOrder(cart);
+        let payment = await proceedToPayment(orderId);
+        let summary = await showOrderSummary(payment);
+        let result = await updateWallet(summary);
+        console.log(result);
+    } catch(error) {
+        console.log("Error:", error);
+    }
+}
+processOrder();
