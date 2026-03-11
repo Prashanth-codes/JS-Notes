@@ -221,3 +221,168 @@ async function processOrder() {
     }
 }
 processOrder();
+
+
+
+
+
+
+
+
+
+
+******************************************************************************************************************
+
+Another example:
+function getUsername(username, callback){
+    console.log("Getting users from database");
+    setTimeout(()=>{
+        let user = {
+            id: 1,
+            username: username,
+            password: "1234"
+        }
+        console.log("User found", user.username);
+        callback(user);
+    },2000);
+}
+
+function verifyPass(user, password, callback){
+    console.log("Verifying password");
+    setTimeout(()=>{
+        if (user.password === password){
+            console.log("Pass verified");
+            callback(user);
+        }
+    },2000)
+}
+
+function getProfile(user,callback){
+    console.log("Fetching details");
+    setTimeout(()=>{
+        let profile = {
+            id: 1,
+            username: user.username,
+            age: 24
+        }
+        console.log("Details fetched");
+        callback(profile);
+    },2000)
+}
+
+function dashboard(profile, callback){
+    console.log("Dashboard");
+    setTimeout(()=>{
+        console.log("Hii", profile.username);
+        callback();
+    },2000)
+}
+
+const username = "Prashanth";
+const password = "1234";
+
+getUsername(username, function(user){
+    verifyPass(user, password, function(user){
+        getProfile(user, function(profile){
+            dashboard(profile, function(){
+                console.log("All done");
+            });
+        });
+    });
+});
+
+**************with promises
+
+function getUsername(username, callback){
+    return new Promise(function(resolve,reject){
+        console.log("Getting users from database");
+        setTimeout(()=>{
+            let user = {
+                id: 1,
+                username: username,
+                password: "1234"
+            }
+            console.log("User found", user.username);
+            resolve(user);
+        },2000);
+    })
+}
+
+function verifyPass(user, password, callback){
+    return new Promise(function(resolve,reject){
+        console.log("Verifying password");
+        setTimeout(()=>{
+            if (user.password === password){
+                console.log("Pass verified");
+                resolve(user);
+            }
+        },2000)
+    })
+}
+
+function getProfile(user,callback){
+    return new Promise(function(resolve,reject){
+        console.log("Fetching details");
+        setTimeout(()=>{
+            let profile = {
+                id: 1,
+                username: user.username,
+                age: 24
+            }
+            console.log("Details fetched");
+            resolve(profile);
+        },2000)
+    })
+}
+
+function dashboard(profile, callback){
+    return new Promise(function(resolve,reject){
+        console.log("Dashboard");
+        setTimeout(()=>{
+            console.log("Hii", profile.username);
+            resolve("All done");
+        },2000)
+    })
+}
+
+const username = "Prashanth";
+const password = "1234";
+
+///getUsername(username)
+//     .then(function(user){
+//         return verifyPass(user, password);
+//     })
+//     .then(function(user){
+//         return getProfile(user);
+//     })
+//     .then(function(profile){
+//         return dashboard(profile)
+//     })
+//     .then(function(result){
+//         console.log(result);
+//     })
+//     .catch(function(err){
+//         console.log(err);
+//     })
+
+getUsername(username)
+.then(verifyPass(password))
+.then(getProfile)
+.then(dashboard)
+.then(res=> console.log(res))
+
+async-await:
+async function process(){
+    try{
+        let user = await getUsername(username);
+        user = await verifyPass(user,password);
+        const profile = await getProfile(user);
+        const result = await dashboard(profile)
+        console.log(result);
+    }
+    catch(error){
+        console.log(error);
+    }
+}
+
+process();
